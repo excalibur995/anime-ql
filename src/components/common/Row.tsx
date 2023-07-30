@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 
 type RowStyledProps = Pick<
   React.CSSProperties,
-  "justifyContent" | "alignItems" | "padding"
+  "justifyContent" | "alignItems" | "padding" | "gap"
 >;
 
 const RowComponent = styled.div<RowStyledProps>`
@@ -11,6 +11,7 @@ const RowComponent = styled.div<RowStyledProps>`
   align-items: ${(props) => props.alignItems ?? "center"};
   justify-content: ${(props) => props.justifyContent ?? "flex-start"};
   padding: ${(props) => props.padding};
+  gap: ${(props) => props.gap};
 `;
 
 const Row = (props: RowStyledProps & PropsWithChildren) => {

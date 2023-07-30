@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
 import { PropsWithChildren } from "react";
 
-import { baseAlignment, container } from "@/styles/global";
 import { cva } from "class-variance-authority";
+import Header from "./Header";
 import Seo from "./Seo";
 
 const wrapper = css`
@@ -11,10 +11,14 @@ const wrapper = css`
   flex-direction: column;
 `;
 const mainContainer = css`
-  margin-top: 65px;
+  margin-top: 55px; // header height
   flex-grow: 1;
 `;
-const contentContainer = cva([container, baseAlignment]);
+const contentContainer = cva(
+  css`
+    position: relative;
+  `
+);
 
 type LayoutProps = PropsWithChildren & { className?: string };
 
@@ -22,6 +26,7 @@ export default function Layout({ children, className }: LayoutProps) {
   return (
     <Seo>
       <div className={wrapper}>
+        <Header />
         <main className={mainContainer}>
           <div className={contentContainer({ className })}>{children}</div>
         </main>

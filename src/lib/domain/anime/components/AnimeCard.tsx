@@ -24,7 +24,7 @@ const cardContainer = css`
   padding: 0.5rem;
   color: #000000;
   transition: all 0.2s;
-
+  height: 100%;
   &:hover {
     background-color: #f0f1f3;
   }
@@ -46,6 +46,8 @@ const titleContainer = css`
 
 const inline = css`
   display: inline-block;
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 const score = css`
@@ -53,11 +55,18 @@ const score = css`
 `;
 
 const title = css`
-  text-transform: capitalize;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+
+  @supports (-webkit-line-clamp: 2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 `;
 
 const AnimeCard = (props: AnimeCardProps) => {
@@ -78,7 +87,7 @@ const AnimeCard = (props: AnimeCardProps) => {
           <span title={props.media.title.userPreferred} className={title}>
             {props.media.title.userPreferred}
           </span>
-          ({props.media.seasonYear})
+          <span>({props.media.seasonYear})</span>
         </span>
 
         <span className={titleContainer}>

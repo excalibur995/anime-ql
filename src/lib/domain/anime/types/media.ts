@@ -5,11 +5,30 @@ export interface MediaList {
   score: number;
 }
 
+export interface Trailer {
+  id: string;
+  thumbnail: string;
+  site: string;
+}
+
 export interface Media {
-  id: number;
-  title: MediaTitle;
-  coverImage: CoverImage;
+  id: string;
   seasonYear: number;
+  bannerImage: string;
+  genres: string[];
+  description: string;
+  duration: number;
+  averageScore: number;
+  popularity: number;
+  status: string;
+  coverImage: CoverImage;
+  title: Title;
+  episodes: number;
+  trailer: Trailer;
+  characters: {
+    nodes: Character[];
+    pageInfo: PageInfo;
+  };
 }
 
 export interface CoverImage {
@@ -26,6 +45,17 @@ export type MediaStatus =
   | "PAUSED"
   | "REPEATING";
 
-export interface MediaTitle {
+interface Title {
   userPreferred: string;
+}
+
+interface Image {
+  large: string;
+  medium: string;
+}
+
+interface Character {
+  id: string;
+  image: Image;
+  name: Title;
 }

@@ -1,3 +1,4 @@
+import Layout from "@/components/layouts/Layout";
 import Seo from "@/components/layouts/Seo";
 import ApolloWrapper from "@/lib/drivers/apollo/ApolloWrapper";
 import "@/styles/globals.css";
@@ -7,7 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Seo>
       <ApolloWrapper>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ApolloWrapper>
     </Seo>
   );
