@@ -21,10 +21,6 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>{CssBaseline.flush()}</Head>
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,300,400&display=swap"
-          rel="stylesheet"
-        />
         <body>
           <Main />
           <NextScript />
