@@ -21,10 +21,10 @@ export const ANIME_LIST_QUERY = gql`
       }
       mediaList(type: ANIME) {
         id
-        status
-        score
         media {
           id
+          averageScore
+          status
           seasonYear
           coverImage {
             large

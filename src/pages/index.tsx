@@ -16,7 +16,7 @@ export default function Home(props: any) {
         <div className={grid}>
           {data?.Page.mediaList.map((anime) => (
             <Link href={`/anime-detail/${anime.media.id}`} key={anime.media.id}>
-              <AnimeCard {...anime} />
+              <AnimeCard {...anime.media} />
             </Link>
           ))}
         </div>

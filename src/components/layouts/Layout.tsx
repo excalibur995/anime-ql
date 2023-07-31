@@ -11,7 +11,7 @@ const wrapper = css`
   flex-direction: column;
 `;
 const mainContainer = css`
-  margin-top: 55px; // header height
+  margin-top: 24px;
   flex-grow: 1;
 `;
 const contentContainer = cva(

@@ -1,6 +1,7 @@
 import { container } from "@/styles/global";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { BsBookmarkStarFill } from "react-icons/bs";
 
 const HeaderWrapper = styled.header`
   position: fixed;
@@ -28,6 +29,7 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const Href = styled(Link)`
@@ -41,6 +43,9 @@ const Header = () => {
       <Container className={container}>
         <ContentWrapper>
           <Href href="/">Anime-QL</Href>
+          <Href href="/collection">
+            <BsBookmarkStarFill />
+          </Href>
         </ContentWrapper>
       </Container>
     </HeaderWrapper>

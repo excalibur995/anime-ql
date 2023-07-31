@@ -4,8 +4,12 @@ import { breakpoints, container } from "@/styles/global";
 import styled from "@emotion/styled";
 import htmr from "htmr";
 import Image from "next/image";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useRef } from "react";
 import { RxClock } from "react-icons/rx";
+
+import Modal, { ModalHandle } from "@/components/common/Modal";
+import { BsBookmarkStarFill } from "react-icons/bs";
+import AddToCollection from "../../collections/components/AddToCollection";
 import { Media } from "../types/media";
 
 const Figure = styled.figure`
@@ -32,6 +36,7 @@ const MediaWrapper = styled.div`
 
 const MediaContainer = styled.div`
   padding: 1rem;
+  position: relative;
 `;
 
 const PosterFigure = styled.figure`
@@ -64,6 +69,7 @@ const TitleWrapper = styled.section`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  position: relative;
 `;
 
 const AnimeTitle = styled.h1`
@@ -154,6 +160,44 @@ const SectionColumn = styled(Column)`
   max-width: 64rem;
 `;
 
+const BookmarkButton = styled.button`
+  all: unset;
+
+  padding: 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: #36454f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Bookmark = (props: Media) => {
+  const ref = useRef<ModalHandle>(null);
+  return (
+    <>
+      <BookmarkButton
+        onClick={(event) => {
+          event.stopPropagation();
+          event.nativeEvent.preventDefault();
+          ref.current?.openModal();
+          console.log(ref.current);
+        }}
+      >
+        <BsBookmarkStarFill
+          width={64}
+          height={64}
+          fill="#eaff00"
+          // fill={isMovieInFavorites(props.id) ? "#eaff00" : "#ffff"}
+        />
+      </BookmarkButton>
+      <Modal ref={ref} title="Add to Collections">
+        <AddToCollection anime={props} />
+      </Modal>
+    </>
+  );
+};
+
 const SectionWithTitle = (props: { title: string } & PropsWithChildren) => {
   return (
     <SectionColumn gap="1rem">
@@ -181,7 +225,7 @@ const AnimeDetail = (props: Media) => {
           <DescriptionWrapper>
             <TitleWrapper>
               <AnimeTitle>{props.title.userPreferred}</AnimeTitle>
-              {/* Add to collections button */}
+              <Bookmark {...props} />
             </TitleWrapper>
             <ScoreWrapper>
               <ScoreContainer>

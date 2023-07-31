@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
 import Image from "next/image";
-import { MediaList } from "../types/media";
+import { Media } from "../types/media";
 
-type AnimeCardProps = MediaList;
+type AnimeCardProps = Media;
 
 const figureClass = css`
   position: relative;
@@ -76,23 +76,23 @@ const AnimeCard = (props: AnimeCardProps) => {
         <Image
           fill
           className={imageClass}
-          src={props.media.coverImage.large}
-          alt={props.media.title?.userPreferred + Math.random().toString()}
-          blurDataURL={props.media.coverImage.medium}
+          src={props.coverImage.large}
+          alt={props.title?.userPreferred + Math.random().toString()}
+          blurDataURL={props.coverImage.medium}
           placeholder="blur"
         />
       </figure>
       <section className={descriptionContainer}>
         <span className={inline}>
-          <span title={props.media.title.userPreferred} className={title}>
-            {props.media.title.userPreferred}
+          <span title={props.title.userPreferred} className={title}>
+            {props.title.userPreferred}
           </span>
-          <span>({props.media.seasonYear})</span>
+          <span>({props.seasonYear})</span>
         </span>
 
         <span className={titleContainer}>
           &#9733;
-          <span className={score}>{props.score}</span>
+          <span className={score}>{props.averageScore}</span>
         </span>
       </section>
     </div>
