@@ -16,17 +16,17 @@ export interface AnimeCollection {
 
 interface AnimeCollectionContextProps {
   collection: AnimeCollection[];
-  createCollection: (name: string) => AnimeCollection;
+  createCollection: (name: string) => void | AnimeCollection;
   removeCollection: (id: number) => void;
   addToCollection: (id: number, anime: Media) => void;
   removeFromCollection: (id: number, anime: Media) => void;
-  editCollectionName: (id: number, name: string) => void;
+  editCollectionName: (id: number, name: string) => void | boolean;
   isAnimeInsideCollection: (id: number, anime: Media) => boolean;
 }
 
 const CollectionContext = createContext<AnimeCollectionContextProps>({
   collection: [],
-  createCollection: function (name: string): AnimeCollection {
+  createCollection: function (name: string): void | AnimeCollection {
     return {
       collection: [],
       collectionId: 0,
@@ -35,7 +35,7 @@ const CollectionContext = createContext<AnimeCollectionContextProps>({
   },
   addToCollection: function (id: number, anime: Media): void {},
   removeFromCollection: function (id: number, anime: Media): void {},
-  editCollectionName: function (id: number, name: string): void {},
+  editCollectionName: function (id: number, name: string): void | boolean {},
   removeCollection: function (id: number): void {},
   isAnimeInsideCollection(id, anime) {
     return false;
@@ -62,6 +62,26 @@ export default function CollectionProvider(props: PropsWithChildren) {
 
   const createCollection = (collectionName: string) => {
     const collectionId = generateId(collection);
+
+    // Check for duplicate collection names
+    const isDuplicateName = collection.some(
+      (item) =>
+        item.collectionName.toLowerCase() === collectionName.toLowerCase()
+    );
+
+    // Check for special characters in the collection name
+    const hasSpecialCharacters = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(
+      collectionName
+    );
+
+    if (isDuplicateName) {
+      return alert("Collection name must be unique.");
+    }
+
+    if (hasSpecialCharacters) {
+      return alert("Collection name cannot contain special characters.");
+    }
+
     const newCollection = {
       collectionId,
       collectionName,
@@ -111,12 +131,34 @@ export default function CollectionProvider(props: PropsWithChildren) {
 
   const editCollectionName = (id: number, name: string) => {
     const current = [...collection];
+
+    // Check for duplicate collection names
+    const isDuplicateName = current.some(
+      (item) =>
+        item.collectionId !== id &&
+        item.collectionName.toLowerCase() === name.toLowerCase()
+    );
+
+    // Check for special characters in the collection name
+    const hasSpecialCharacters = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(
+      name
+    );
+
+    if (isDuplicateName) {
+      return alert("Collection name must be unique.");
+    }
+
+    if (hasSpecialCharacters) {
+      return alert("Collection name cannot contain special characters.");
+    }
+
     const selectedCollection = current.find((item) => item.collectionId === id);
     if (!!selectedCollection) {
       selectedCollection.collectionName = name;
       setCollection(current);
       setValue(true);
     }
+    return true;
   };
 
   const removeFromCollection = (id: number, anime: Media) => {

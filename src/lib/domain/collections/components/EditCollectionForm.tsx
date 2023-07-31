@@ -19,11 +19,13 @@ const EditCollectionForm = (props: EditCollectionProps) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const collectionName = form.get("collectionName");
-    editCollectionName(
+    const edited = editCollectionName(
       props.collection.collectionId,
       collectionName?.toString()!
     );
-    props?.onHandleEditCollection?.();
+    if (!!edited) {
+      props?.onHandleEditCollection?.();
+    }
   };
   return (
     <form onSubmit={handleSubmitForm}>

@@ -13,12 +13,14 @@ interface CreateCollectionFormProps {
 
 const CreateCollectionForm = (props: CreateCollectionFormProps) => {
   const { createCollection } = useCollectionContext();
-  const handleSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const collectionName = form.get("collectionName");
-    const collection = await createCollection(collectionName!.toString());
-    props?.onHandleCreateCollection?.(collection);
+    const collection = createCollection(collectionName!.toString());
+    if (collection) {
+      props?.onHandleCreateCollection?.(collection);
+    }
   };
   return (
     <form onSubmit={handleSubmitForm}>
