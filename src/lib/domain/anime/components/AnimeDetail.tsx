@@ -8,7 +8,7 @@ import { PropsWithChildren, useRef } from "react";
 import { RxClock } from "react-icons/rx";
 
 import Modal, { ModalHandle } from "@/components/common/Modal";
-import { BsBookmarkStarFill } from "react-icons/bs";
+import { BsBookmarkStarFill, BsFillPlayFill } from "react-icons/bs";
 import AddToCollection from "../../collections/components/AddToCollection";
 import { Media } from "../types/media";
 
@@ -148,12 +148,15 @@ const CharactersWrapper = styled.div`
   }
 `;
 
-const Video = styled.iframe`
+const Video = styled.figure`
   min-height: 400px;
   max-width: 64rem;
   width: 100%;
   aspect-ratio: 16 / 9;
   border: none;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
 `;
 
 const SectionColumn = styled(Column)`
@@ -162,7 +165,6 @@ const SectionColumn = styled(Column)`
 
 const BookmarkButton = styled.button`
   all: unset;
-
   padding: 0.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -170,6 +172,18 @@ const BookmarkButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Href = styled.a`
+  width: 100%;
+  position: relative;
+`;
+
+const PlayButtonContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const Bookmark = (props: Media) => {
@@ -272,9 +286,22 @@ const AnimeDetail = (props: Media) => {
           {props.trailer &&
             (props.trailer.id || props.trailer.site === "youtube") && (
               <SectionWithTitle title="Trailers">
-                <Video
-                  src={`https://www.youtube.com/embed/${props.trailer.id}`}
-                />
+                <Href
+                  href={`https://www.youtube.com/watch?v=${props.trailer.id}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Video>
+                    <Image
+                      src={props.trailer.thumbnail}
+                      alt={props.title.userPreferred + "trailer"}
+                      fill
+                    />
+                  </Video>
+                  <PlayButtonContainer>
+                    <BsFillPlayFill size={72} fill="red" />
+                  </PlayButtonContainer>
+                </Href>
               </SectionWithTitle>
             )}
         </MediaContainer>
