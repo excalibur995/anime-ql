@@ -8,6 +8,7 @@ import { Pagination } from "@nextui-org/react";
 import { cva } from "class-variance-authority";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const AnimeCard = dynamic(
@@ -27,10 +28,13 @@ const PaginationContainer = styled.div`
   width: 100%;
 `;
 export default function Home(props: any) {
-  const [page, setPage] = useState<number>(1);
+  const router = useRouter();
+  const { page } = router.query;
+
+  const [current, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
   const { data, loading } = useMediaListQuery({
-    page,
+    page: current,
     perPage: 10,
   });
 
@@ -40,8 +44,19 @@ export default function Home(props: any) {
     }
   }, [data?.Page.pageInfo.total, loading, totalPage]);
 
+  useEffect(() => {
+    if (typeof page !== "undefined") {
+      setPage(Number(page));
+    }
+  }, [page]);
+
   const onChangePage = (e: number) => {
     setPage(e);
+
+    router.push({ query: { ...router.query, page: e.toString() } }, undefined, {
+      scroll: false,
+    });
+
     if (typeof window !== "undefined") {
       window.scrollTo({
         top: 0,
@@ -74,7 +89,7 @@ export default function Home(props: any) {
       </LoadingState>
       <PaginationContainer>
         <Pagination
-          page={page}
+          page={current}
           total={totalPage}
           initialPage={1}
           onChange={onChangePage}
