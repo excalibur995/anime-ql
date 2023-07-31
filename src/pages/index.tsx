@@ -1,12 +1,17 @@
 import Layout from "@/components/layouts/Layout";
-import AnimeCard from "@/lib/domain/anime/components/AnimeCard";
+
 import { useMediaListQuery } from "@/lib/domain/anime/query/anime-list-query";
 import { baseAlignment, container, grid } from "@/styles/global";
 import styled from "@emotion/styled";
 import { Pagination } from "@nextui-org/react";
 import { cva } from "class-variance-authority";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useState } from "react";
+
+const AnimeCard = dynamic(
+  () => import("@/lib/domain/anime/components/AnimeCard")
+);
 
 const Section = styled.div`
   display: flex;

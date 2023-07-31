@@ -184,12 +184,7 @@ const Bookmark = (props: Media) => {
           console.log(ref.current);
         }}
       >
-        <BsBookmarkStarFill
-          width={64}
-          height={64}
-          fill="#eaff00"
-          // fill={isMovieInFavorites(props.id) ? "#eaff00" : "#ffff"}
-        />
+        <BsBookmarkStarFill width={64} height={64} fill="#eaff00" />
       </BookmarkButton>
       <Modal ref={ref} title="Add to Collections">
         <AddToCollection anime={props} />

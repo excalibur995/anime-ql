@@ -1,6 +1,5 @@
 import Layout from "@/components/layouts/Layout";
-import AnimeList from "@/lib/domain/anime/components/AnimeList";
-import EditCollectionName from "@/lib/domain/collections/components/EditCollectionName";
+
 import {
   AnimeCollection,
   useCollectionContext,
@@ -9,7 +8,17 @@ import { baseAlignment, container } from "@/styles/global";
 import styled from "@emotion/styled";
 import { cva } from "class-variance-authority";
 import { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
 import { useMemo } from "react";
+
+const EditCollectionName = dynamic(
+  () => import("@/lib/domain/collections/components/EditCollectionName")
+);
+
+const AnimeList = dynamic(
+  () => import("@/lib/domain/anime/components/AnimeList")
+);
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const collectionId = context.params?.id as number | undefined;
   if (typeof collectionId === "undefined") {
