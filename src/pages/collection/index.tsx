@@ -57,7 +57,7 @@ const CollectionPage = () => {
   if (collection.length < 1) {
     return (
       <NoCollectionLayout>
-        <h1>No Collection yet...</h1>
+        <h3>No Collection yet...</h3>
         <AddNewCollection />
       </NoCollectionLayout>
     );
@@ -65,7 +65,7 @@ const CollectionPage = () => {
   return (
     <Layout className={cva([container, baseAlignment])()}>
       <SectionList direction="row">
-        <h1>Collection</h1>
+        <h3>Collection</h3>
         <AddNewCollection />
       </SectionList>
       <Grid className={grid}>

@@ -14,13 +14,6 @@ const Container = styled.div({
   position: "absolute",
   top: 16,
   right: 16,
-  background: "white",
-  padding: 12,
-  borderRadius: 16,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 35,
 });
 
 interface AnimeListProps {

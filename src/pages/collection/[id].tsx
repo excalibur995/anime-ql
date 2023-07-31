@@ -59,7 +59,7 @@ const CollectionDetail = (props: { collectionId: string }) => {
   if (selectedCollection.collection.length < 1) {
     return (
       <NoCollectionLayout>
-        <h1>Nothing to show here...</h1>
+        <h3>Nothing to show here...</h3>
         <p>Add new Anime by go to Anime Detail Page</p>
       </NoCollectionLayout>
     );

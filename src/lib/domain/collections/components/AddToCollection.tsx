@@ -2,6 +2,7 @@ import Modal, { ModalHandle } from "@/components/common/Modal";
 import { plural } from "@/lib/utils/utils";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 import { RxPlus } from "react-icons/rx";
 import { Media } from "../../anime/types/media";
@@ -26,33 +27,50 @@ const AddToCollection = (props: AddToCollectionProps) => {
     <>
       <Container>
         {collection.map((item) => (
-          <ListItem key={item.collectionId}>
-            <SectionList direction="row">
-              <ListImage
-                ref={imageRef}
-                width={80}
-                height={80}
-                src={item.collection?.[0]?.coverImage.large ?? ""}
-                alt={item.collectionName}
-                onError={(e) => {
-                  if (imageRef.current) {
-                    imageRef.current.src = "/placeholder.png";
-                  }
-                }}
-              />
-              <SectionList direction="column">
-                <ListTitle>{item.collectionName}</ListTitle>
-                {item.collection.length > 0 && (
-                  <ListDesc>
-                    {item.collection.length}{" "}
-                    {plural(item.collection.length, "Anime")}
-                  </ListDesc>
-                )}
-              </SectionList>
-            </SectionList>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+            key={item.collectionId}
+          >
+            <Link
+              style={{ display: "flex" }}
+              href={"/collection/" + item.collectionId}
+            >
+              <ListItem>
+                <SectionList direction="row">
+                  <ListImage
+                    ref={imageRef}
+                    width={80}
+                    height={80}
+                    src={item.collection?.[0]?.coverImage.large ?? ""}
+                    alt={item.collectionName}
+                    onError={(e) => {
+                      if (imageRef.current) {
+                        imageRef.current.src = "/placeholder.png";
+                      }
+                    }}
+                  />
+                  <SectionList direction="column">
+                    <ListTitle>{item.collectionName}</ListTitle>
+                    {item.collection.length > 0 && (
+                      <ListDesc>
+                        {item.collection.length}{" "}
+                        {plural(item.collection.length, "Anime")}
+                      </ListDesc>
+                    )}
+                  </SectionList>
+                </SectionList>
+              </ListItem>
+            </Link>
             <AddRemoveButton
               isInside={isAnimeInsideCollection(item.collectionId, props.anime)}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const isInside = isAnimeInsideCollection(
                   item.collectionId,
                   props.anime
@@ -67,7 +85,7 @@ const AddToCollection = (props: AddToCollectionProps) => {
             >
               <RxPlus />
             </AddRemoveButton>
-          </ListItem>
+          </div>
         ))}
 
         <CreateNewButton as="button" onClick={() => ref.current?.openModal()}>

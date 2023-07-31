@@ -19,6 +19,12 @@ const Inline = styled.section`
 const Flex = styled.button`
   all: unset;
   display: flex;
+  background: white;
+  padding: 12px;
+  border-radius: 16px;
+  justify-content: center;
+  align-items: center;
+  z-index: 35;
 `;
 
 interface RemoveAnimeFromCollectionProps {
